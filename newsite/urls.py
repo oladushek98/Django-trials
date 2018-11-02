@@ -19,8 +19,7 @@ from django.conf.urls import include, url
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    url(r'auth/', include('regandauth.urls')),
+    url(r'user/', include('userpage.urls')),
     url(r'^', include('mainapp.urls')),
-    url(r'signup/', include('regandauth.urls')),
-    url(r'signin/', include('regandauth.urls')),
-    url(r'register/', include('regandauth.urls')),
 ]

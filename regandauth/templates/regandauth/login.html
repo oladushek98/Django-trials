@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>My site</title>
+    <title>Login</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -13,31 +13,37 @@
 <body>
     <div class="container-fluid">
         <div class="row">
-            {% if user.is_authenticated %}
-            <div class="col-lg-11"></div>
-            <div class="col-lg-1">
-                <div class="btn btn-link"><a href="/auth/logout">Log out ({{ user.username }})</a></div>
-            </div>
-            {% else %}
             <div class="col-lg-10"></div>
             <div class="col-lg-1" >
-                <div class="btn btn-link "><a href="/auth/login/"> Sign in</a></div>
+                <div class="btn btn-link "><a href="/">Back</a></div>
             </div>
             <div class="col-lg-1">
                 <div class="btn btn-link"><a href="/auth/register/">Sign up</a></div>
-            </div>
-            {% endif %}        
+            </div>    
         </div>
     </div>
     <div class="jumbotron">
-        <div class="container" >
-            <h1>Welcome to my experemetal site!</h1>
-            <p>It's something to try how to work with Django framework!</p>
+        <div class="container">
+            <form action="/auth/login/" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                      <label for="username">Username</label>
+                      <input type="text" class="form-control" name="username" id="exampleInputText" placeholder="Username">
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleInputPassword1">Password</label>                          
+                      <input type="password" class="form-control" name="password" id="exampleInputPassword1" placeholder="Password">
+                    </div>
+                    {% if login_error %}
+                    <div class="col-sm-3">
+                        <small id="passwordHelp" class="text-danger">
+                            {{ login_error }}
+                        </small>      
+                    </div>
+                    {% endif %}
+                    <button type="submit" class="btn btn-primary">Sign in</button>
+            </form>
         </div>
-    </div>    
-    <div class="container">
-        {% block content %}
-        {% endblock %}
     </div>
 </body>
 </html>
